@@ -14,7 +14,15 @@ h1, h2, h3, h4 {color: #00ff99;}
 </style>
 """, unsafe_allow_html=True)
 
-model = joblib.load("insider_model.pkl")
+from sklearn.ensemble import IsolationForest
+
+# Create and train dummy model
+# (This replaces insider_model.pkl)
+model = IsolationForest(contamination=0.1, random_state=42)
+
+# Train on synthetic normal data
+normal_data = np.random.rand(200, 4)
+model.fit(normal_data)
 
 st.title("🛡 InsiderSentinel AI")
 st.subheader("Dark Hacker Edition - Insider Threat Detection")
